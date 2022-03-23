@@ -1,0 +1,20 @@
+body {
+  box-sizing: border-box;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.row-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.box {
+  width: 52.2px;
+  height: 52.2px;
+  background-color: #555;
+  border: 1px solid black;
+}
