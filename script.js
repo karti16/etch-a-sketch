@@ -1,7 +1,7 @@
 let mainContainer = document.querySelector(".main-container");
 let boxes = document.getElementsByClassName("box");
 
-//Slider fucntions
+//Slider functions
 let slider = document.getElementById("myRange");
 let sliderValue = document.getElementById("gridvalue");
 document.getElementById("myRange").value = "20";
@@ -26,7 +26,7 @@ function resetGrid() {
 // Calling main function to start with default grid size
 main();
 
-// Main function. calling all other fuction
+// Main function. calling all other function
 function main() {
   generateGrid(gridCount);
   setWidth();
