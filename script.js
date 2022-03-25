@@ -1,18 +1,18 @@
 let mainContainer = document.querySelector(".main-container");
+let boxes = document.getElementsByClassName("box");
+
+//Slider fucntions
 let slider = document.getElementById("myRange");
 let sliderValue = document.getElementById("gridvalue");
 document.getElementById("myRange").value = "20";
-sliderValue.innerHTML = slider.value;
-//clear grid paint
-let clearBtn = document.querySelector(".clear");
-clearBtn.addEventListener("click", clearPaint);
+sliderValue.innerHTML = "20 x 20";
+slider.addEventListener("mouseup", updateGrid);
+
+//Reset to default size
 let reset = document.querySelector(".reset");
 reset.addEventListener("click", resetGrid);
 
-console.log(mainContainer);
-console.log(mainContainer);
-console.log(mainContainer);
-//default grid count
+let containerWidth = 500; //for calculating box width
 let gridCount = 20;
 
 // Reset grid to default size
@@ -34,39 +34,24 @@ function main() {
 }
 
 //Update grid with the range slider
-slider.addEventListener("mouseup", updateGrid);
 
 function updateGrid() {
-  sliderValue.innerHTML = slider.value;
-
   gridCount = slider.value;
-  sliderValue.innerHTML = gridCount;
+  sliderValue.innerHTML = `${slider.value} x ${slider.value}`;
   main();
 }
 
 function generateGrid(size) {
-  const box = `<div class="box"></div>`.repeat(size);
-  const row = `<div class="row-container">${box}</div>`.repeat(size);
-  mainContainer.innerHTML = row;
+  const box = `<div class="box"></div>`.repeat(size * size);
+  mainContainer.innerHTML = box;
 }
 
 // Set width of the boxes after generating it
 function setWidth() {
-  boxes = document.querySelectorAll(".box");
-
-  // for (let i = 0; i < boxes.length; i++) {
-  //   boxes[i].style.width = `${mainContainer.scrollWidth / gridCount}px`;
-  //   boxes[i].style.height = `${Math.floor(
-  //     mainContainer.scrollHeight / gridCount
-  //   )}px`;
-  console.log(mainContainer.scrollHeight);
-  // }
-  let gridW = Math.floor(300 / gridCount);
-  let gridH = Math.floor(300 / gridCount);
-
+  let gridWidth = containerWidth / gridCount;
   r = document.querySelector(":root");
-  r.style.setProperty("--gridH", `${gridH}px`);
-  r.style.setProperty("--gridW", `${gridW}px`);
+  r.style.setProperty("--count", `${gridCount}`);
+  r.style.setProperty("--width", `${gridWidth}px`);
 }
 
 // Starts painting with mouse click and mouseclick and mouse move
@@ -101,11 +86,6 @@ mainContainer.addEventListener("mouseup", () => {
   mouseDown = false;
   mouseMove = false;
 });
-
-//Clear the grid before generating other size grids
-function clearGrid() {
-  mainContainer.innerHTML = "";
-}
 
 // Generated random rgb color to paint in rainbow color
 function random_rgba() {
