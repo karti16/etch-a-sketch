@@ -1,10 +1,19 @@
 let mainContainer = document.querySelector(".main-container");
-let gridCount = 20;
 let slider = document.getElementById("myRange");
 let sliderValue = document.getElementById("gridvalue");
 sliderValue.innerHTML = slider.value;
 let clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", clearPaint);
+let reset = document.querySelector(".reset");
+reset.addEventListener("click", resetGrid);
+let gridCount = 20;
+// Reset grid to default size
+function resetGrid() {
+  gridCount = 20;
+  document.getElementById("myRange").value = "20";
+  sliderValue.innerHTML = 20;
+  main();
+}
 
 // Calling main function to start with default grid size
 main();
@@ -16,12 +25,23 @@ function main() {
   paint();
 }
 
-slider.oninput = function () {
-  gridCount = this.value;
+slider.addEventListener("mouseup", updateGrid);
+
+function updateGrid() {
+  sliderValue.innerHTML = slider.value;
+
+  gridCount = slider.value;
   sliderValue.innerHTML = gridCount;
-  console.log(mainContainer);
+  console.log(gridCount);
   main();
-};
+}
+
+// slider.oninput = function () {
+//   gridCount = this.value;
+//   sliderValue.innerHTML = gridCount;
+//   console.log(mainContainer);
+//   main();
+// };
 
 // Generate Grid and attach to html
 function generateGrin(size) {
