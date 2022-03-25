@@ -75,20 +75,6 @@ mainContainer.addEventListener("mouseup", () => {
   mouseMove = false;
 });
 
-// No longer needed as the slider replace this function
-// function getSize() {
-//   gsize = +document.querySelector("#grid-size").value;
-//   clearGrid();
-
-//   gridCount = gsize;
-//   console.log(gridCount);
-//   mainContainer = document.querySelector(".main-container");
-//   // createRow();
-//   generateGrin(gridCount);
-//   setWidth();
-//   red();
-// }
-
 //Clear the grid before generating other size grids
 function clearGrid() {
   mainContainer.innerHTML = "";
