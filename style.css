@@ -15,6 +15,6 @@ body {
 .box {
   width: 52.2px;
   height: 52.2px;
-  background-color: #555;
+  background-color: rgb(252, 252, 252);
   border: 1px solid black;
 }
