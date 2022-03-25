@@ -1,12 +1,20 @@
 let mainContainer = document.querySelector(".main-container");
 let slider = document.getElementById("myRange");
 let sliderValue = document.getElementById("gridvalue");
+document.getElementById("myRange").value = "20";
 sliderValue.innerHTML = slider.value;
+//clear grid paint
 let clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", clearPaint);
 let reset = document.querySelector(".reset");
 reset.addEventListener("click", resetGrid);
+
+console.log(mainContainer);
+console.log(mainContainer);
+console.log(mainContainer);
+//default grid count
 let gridCount = 20;
+
 // Reset grid to default size
 function resetGrid() {
   gridCount = 20;
@@ -33,7 +41,6 @@ function updateGrid() {
 
   gridCount = slider.value;
   sliderValue.innerHTML = gridCount;
-  console.log(gridCount);
   main();
 }
 
@@ -46,13 +53,20 @@ function generateGrid(size) {
 // Set width of the boxes after generating it
 function setWidth() {
   boxes = document.querySelectorAll(".box");
-  for (let i = 0; i < boxes.length; i++) {
-    boxes[i].style.width = `${mainContainer.scrollWidth / gridCount}px`;
-    boxes[i].style.height = `${Math.floor(
-      mainContainer.scrollHeight / gridCount
-    )}px`;
-    console.log(mainContainer.scrollHeight);
-  }
+
+  // for (let i = 0; i < boxes.length; i++) {
+  //   boxes[i].style.width = `${mainContainer.scrollWidth / gridCount}px`;
+  //   boxes[i].style.height = `${Math.floor(
+  //     mainContainer.scrollHeight / gridCount
+  //   )}px`;
+  console.log(mainContainer.scrollHeight);
+  // }
+  let gridW = Math.floor(300 / gridCount);
+  let gridH = Math.floor(300 / gridCount);
+
+  r = document.querySelector(":root");
+  r.style.setProperty("--gridH", `${gridH}px`);
+  r.style.setProperty("--gridW", `${gridW}px`);
 }
 
 // Starts painting with mouse click and mouseclick and mouse move
