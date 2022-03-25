@@ -3,6 +3,10 @@ body {
 }
 
 .main-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   width: 300px;
   height: 300px;
 }
