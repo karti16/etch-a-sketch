@@ -20,11 +20,12 @@ main();
 
 // Main function. calling all other fuction
 function main() {
-  generateGrin(gridCount);
+  generateGrid(gridCount);
   setWidth();
   paint();
 }
 
+//Update grid with the range slider
 slider.addEventListener("mouseup", updateGrid);
 
 function updateGrid() {
@@ -36,15 +37,7 @@ function updateGrid() {
   main();
 }
 
-// slider.oninput = function () {
-//   gridCount = this.value;
-//   sliderValue.innerHTML = gridCount;
-//   console.log(mainContainer);
-//   main();
-// };
-
-// Generate Grid and attach to html
-function generateGrin(size) {
+function generateGrid(size) {
   const box = `<div class="box"></div>`.repeat(size);
   const row = `<div class="row-container">${box}</div>`.repeat(size);
   mainContainer.innerHTML = row;
