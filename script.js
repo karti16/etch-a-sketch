@@ -5,9 +5,16 @@ let boxes = document.getElementsByClassName("box");
 let slider = document.getElementById("myRange");
 let sliderValue = document.getElementById("gridvalue");
 document.getElementById("myRange").value = "20";
+
+//20 x 20 instead 20
 sliderValue.innerHTML = "20 x 20";
+
+//eventlistener for cursor
 slider.addEventListener("mouseup", updateGrid);
+
+//eventlistener for touch
 slider.addEventListener("pointerleave", updateGrid);
+
 //Clear paint
 let clear = document.querySelector(".clear");
 clear.addEventListener("click", clearPaint);
@@ -18,12 +25,18 @@ let reset = document.querySelector(".reset");
 reset.addEventListener("click", resetGrid);
 reset.addEventListener("pointerdown", resetGrid);
 
-let containerWidth = 500; //for calculating box width
+//for calculating box width
+let containerWidth = 500;
+//default grid size value
 let gridCount = 20;
+
+//default grid color
 let paintColor = "green";
-// Reset grid to default size
+
+// Reset grid to default size and color
 function resetGrid() {
   gridCount = 20;
+  paintColor = "green";
   document.getElementById("myRange").value = "20";
   sliderValue.innerHTML = "20 x 20";
   main();
@@ -38,8 +51,9 @@ function main() {
   setWidth();
   color();
   cursorPaint();
-  touchPain();
+  touchPaint();
   erase();
+  toggleGrid();
 }
 
 //Update grid with the range slider
@@ -50,6 +64,7 @@ function updateGrid() {
   main();
 }
 
+//Generate grid size
 function generateGrid(size) {
   // const box = `<div class="box"></div>`.repeat(size * size);
   let box = "";
@@ -62,9 +77,8 @@ function generateGrid(size) {
 // Set width of the boxes after generating it
 function setWidth() {
   let gridWidth = containerWidth / gridCount;
-  r = document.querySelector(":root");
-  r.style.setProperty("--count", `${gridCount}`);
-  r.style.setProperty("--width", `${gridWidth}px`);
+  setCssVar("--count", `${gridCount}`);
+  setCssVar("--width", `${gridWidth}px`);
 }
 
 // Starts painting with mouse click and mouseclick and mouse move
@@ -117,7 +131,8 @@ function random_rgba() {
   );
 }
 
-function touchPain() {
+//Paint with touch screen
+function touchPaint() {
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("pointerdown", function (e) {
       if (isTouchScreendevice()) boxes[i].style.backgroundColor = paintColor;
@@ -138,17 +153,43 @@ function isTouchScreendevice() {
   return "ontouchstart" in window || navigator.maxTouchPoints;
 }
 
+//Color Picker
 function color() {
   let colorPicker = document.querySelector("#colorPicker");
   colorPicker.addEventListener("change", function () {
     paintColor = colorPicker.value;
-    console.log(paintColor);
   });
 }
 
+//Earsing paint
 function erase() {
   let erasebtn = document.querySelector(".eraser");
   erasebtn.addEventListener("click", function () {
     paintColor = "#ffffff";
   });
+}
+
+function toggleGrid() {
+  let gridbtn = document.querySelector(".gridline");
+
+  gridbtn.addEventListener("click", function () {
+    if ("rgba(61, 61, 61, 0.5)" === getCssVar("--borderColor").trim()) {
+      setCssVar("--borderColor", "rgba(61, 61, 61, 0.0)");
+    } else {
+      setCssVar("--borderColor", "rgba(61, 61, 61, 0.5)");
+    }
+  });
+}
+//`rgba(61, 61, 61, 0.5)`;
+
+//get css variable
+function getCssVar(varName) {
+  r = document.querySelector(":root");
+  rs = getComputedStyle(r);
+  return rs.getPropertyValue(varName);
+}
+//Set css variable
+function setCssVar(varName, varValue) {
+  r = document.querySelector(":root");
+  r.style.setProperty(varName, varValue);
 }

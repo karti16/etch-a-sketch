@@ -140,6 +140,7 @@ table {
 :root {
   --count: 15px;
   --width: 15px;
+  --borderColor: rgba(61, 61, 61, 0.5);
 }
 
 body {
@@ -161,7 +162,7 @@ body {
   grid-template-rows: repeat(var(--count), var(--width));
   border-top: 1px solid;
   border-right: 1px solid;
-  border-color: rgba(61, 61, 61, 0.5);
+  border-color: var(--borderColor);
 
   position: absolute;
   top: 10%;
@@ -175,6 +176,6 @@ body {
 .box {
   border-bottom: 1px solid;
   border-left: 1px solid;
-  border-color: rgba(61, 61, 61, 0.5);
+  border-color: var(--borderColor);
   touch-action: none;
 }
