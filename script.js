@@ -1,3 +1,8 @@
+window.onload = function () {
+  let gridbtn = document.querySelector(".gridline");
+  gridbtn.addEventListener("click", toggleGrid);
+};
+
 let mainContainer = document.querySelector(".main-container");
 let boxes = document.getElementsByClassName("box");
 
@@ -13,12 +18,12 @@ sliderValue.innerHTML = "20 x 20";
 slider.addEventListener("mouseup", updateGrid);
 
 //eventlistener for touch
-slider.addEventListener("pointerleave", updateGrid);
+slider.addEventListener("touchend", updateGrid);
 
 //Clear paint
 let clear = document.querySelector(".clear");
 clear.addEventListener("click", clearPaint);
-clear.addEventListener("pointerdown", clearPaint);
+// clear.addEventListener("pointerdown", clearPaint);
 
 //Reset to default size
 let reset = document.querySelector(".reset");
@@ -31,12 +36,12 @@ let containerWidth = 500;
 let gridCount = 20;
 
 //default grid color
-let paintColor = "green";
+let paintColor = "rgb(0, 128, 0)";
 
 // Reset grid to default size and color
 function resetGrid() {
   gridCount = 20;
-  paintColor = "green";
+  paintColor = "rgb(0, 128, 0)";
   document.getElementById("myRange").value = "20";
   sliderValue.innerHTML = "20 x 20";
   main();
@@ -53,7 +58,7 @@ function main() {
   cursorPaint();
   touchPaint();
   erase();
-  toggleGrid();
+
   downloadImage();
 }
 
@@ -171,15 +176,11 @@ function erase() {
 }
 //Toggle grid
 function toggleGrid() {
-  let gridbtn = document.querySelector(".gridline");
-
-  gridbtn.addEventListener("click", function () {
-    if ("rgba(61, 61, 61, 0.5)" === getCssVar("--borderColor").trim()) {
-      setCssVar("--borderColor", "rgba(61, 61, 61, 0.0)");
-    } else {
-      setCssVar("--borderColor", "rgba(61, 61, 61, 0.5)");
-    }
-  });
+  if ("rgba(61, 61, 61, 0.5)" === getCssVar("--borderColor").trim()) {
+    setCssVar("--borderColor", "rgba(61, 61, 61, 0.0)");
+  } else {
+    setCssVar("--borderColor", "rgba(61, 61, 61, 0.5)");
+  }
 }
 //`rgba(61, 61, 61, 0.5)`;
 
@@ -198,6 +199,7 @@ function setCssVar(varName, varValue) {
 //Download image
 function downloadImage() {
   document.getElementById("download").addEventListener("click", function () {
+    toggleGrid();
     html2canvas(document.querySelector(".main-container")).then(function (
       canvas
     ) {
