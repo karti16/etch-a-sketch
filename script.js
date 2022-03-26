@@ -39,6 +39,7 @@ function main() {
   color();
   cursorPaint();
   touchPain();
+  erase();
 }
 
 //Update grid with the range slider
@@ -141,5 +142,13 @@ function color() {
   let colorPicker = document.querySelector("#colorPicker");
   colorPicker.addEventListener("change", function () {
     paintColor = colorPicker.value;
+    console.log(paintColor);
+  });
+}
+
+function erase() {
+  let erasebtn = document.querySelector(".eraser");
+  erasebtn.addEventListener("click", function () {
+    paintColor = "#ffffff";
   });
 }
