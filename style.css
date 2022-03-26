@@ -133,6 +133,9 @@ table {
 **************************************************************************
 ***************************************************
 **************************************************** */
+* {
+  touch-action: none;
+}
 
 :root {
   --count: 15px;
@@ -151,6 +154,7 @@ body {
   display: grid;
   width: 500px;
   height: 500px;
+  touch-action: none;
 
   /* grid-template-columns: repeat(var(--count), var(--width)); */
   grid-template-columns: repeat(auto-fit, var(--width));
@@ -172,4 +176,5 @@ body {
   border-bottom: 1px solid;
   border-left: 1px solid;
   border-color: rgba(61, 61, 61, 0.5);
+  touch-action: none;
 }

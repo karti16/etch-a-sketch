@@ -19,7 +19,7 @@ let gridCount = 20;
 function resetGrid() {
   gridCount = 20;
   document.getElementById("myRange").value = "20";
-  sliderValue.innerHTML = 20;
+  sliderValue.innerHTML = "20 x 20";
   main();
 }
 
@@ -42,7 +42,11 @@ function updateGrid() {
 }
 
 function generateGrid(size) {
-  const box = `<div class="box"></div>`.repeat(size * size);
+  // const box = `<div class="box"></div>`.repeat(size * size);
+  let box = "";
+  for (let i = 0; i < size * size; i++) {
+    box += `<div class="box item${i}"></div>`;
+  }
   mainContainer.innerHTML = box;
 }
 
@@ -56,17 +60,16 @@ function setWidth() {
 
 // Starts painting with mouse click and mouseclick and mouse move
 function paint() {
-  for (let i = 0; i < boxes.length; i++) {
-    console.log();
-    boxes[i].addEventListener("mousedown", function () {
-      boxes[i].style.backgroundColor = "green";
-    });
-    boxes[i].addEventListener("mouseover", function () {
-      if (mouseDown && mouseMove) {
-        boxes[i].style.backgroundColor = "green";
-      }
-    });
-  }
+  // for (let i = 0; i < boxes.length; i++) {
+  //   boxes[i].addEventListener("mousedown", function () {
+  //     boxes[i].style.backgroundColor = "green";
+  //   });
+  //   boxes[i].addEventListener("mouseover", function () {
+  //     if (mouseDown && mouseMove) {
+  //       boxes[i].style.backgroundColor = "green";
+  //     }
+  //   });
+  // }
 }
 
 // Clears the paint already painted
@@ -102,5 +105,18 @@ function random_rgba() {
     "," +
     r().toFixed(1) +
     ")"
+  );
+}
+
+for (let i = 0; i < boxes.length; i++) {
+  boxes[i].addEventListener("pointermove", function (e) {
+    // let cx = e.changedTouches[0].clientX;
+    // let cy = e.changedTouches[0].clientX;
+    console.log(e);
+
+    boxes[i].style.backgroundColor = "green";
+  });
+  boxes[i].addEventListener("pointermove", (e) =>
+    e.target.releasePointerCapture(e.pointerId)
   );
 }
