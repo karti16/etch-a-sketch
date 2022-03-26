@@ -7,10 +7,16 @@ let sliderValue = document.getElementById("gridvalue");
 document.getElementById("myRange").value = "20";
 sliderValue.innerHTML = "20 x 20";
 slider.addEventListener("mouseup", updateGrid);
+slider.addEventListener("pointerleave", updateGrid);
+//Clear paint
+let clear = document.querySelector(".clear");
+clear.addEventListener("click", clearPaint);
+clear.addEventListener("pointerdown", clearPaint);
 
 //Reset to default size
 let reset = document.querySelector(".reset");
 reset.addEventListener("click", resetGrid);
+reset.addEventListener("pointerdown", resetGrid);
 
 let containerWidth = 500; //for calculating box width
 let gridCount = 20;
@@ -30,7 +36,8 @@ main();
 function main() {
   generateGrid(gridCount);
   setWidth();
-  paint();
+  cursorPaint();
+  touchPain();
 }
 
 //Update grid with the range slider
@@ -59,17 +66,17 @@ function setWidth() {
 }
 
 // Starts painting with mouse click and mouseclick and mouse move
-function paint() {
-  // for (let i = 0; i < boxes.length; i++) {
-  //   boxes[i].addEventListener("mousedown", function () {
-  //     boxes[i].style.backgroundColor = "green";
-  //   });
-  //   boxes[i].addEventListener("mouseover", function () {
-  //     if (mouseDown && mouseMove) {
-  //       boxes[i].style.backgroundColor = "green";
-  //     }
-  //   });
-  // }
+function cursorPaint() {
+  for (let i = 0; i < boxes.length; i++) {
+    boxes[i].addEventListener("mousedown", function () {
+      boxes[i].style.backgroundColor = "green";
+    });
+    boxes[i].addEventListener("mouseover", function () {
+      if (mouseDown && mouseMove) {
+        boxes[i].style.backgroundColor = "green";
+      }
+    });
+  }
 }
 
 // Clears the paint already painted
@@ -108,15 +115,29 @@ function random_rgba() {
   );
 }
 
-for (let i = 0; i < boxes.length; i++) {
-  boxes[i].addEventListener("pointermove", function (e) {
-    // let cx = e.changedTouches[0].clientX;
-    // let cy = e.changedTouches[0].clientX;
-    console.log(e);
+function touchPain() {
+  for (let i = 0; i < boxes.length; i++) {
+    boxes[i].addEventListener("pointerdown", function (e) {
+      if (isTouchScreendevice()) boxes[i].style.backgroundColor = "green";
+    });
 
-    boxes[i].style.backgroundColor = "green";
-  });
-  boxes[i].addEventListener("pointermove", (e) =>
-    e.target.releasePointerCapture(e.pointerId)
-  );
+    boxes[i].addEventListener("pointermove", function (e) {
+      if (isTouchScreendevice()) boxes[i].style.backgroundColor = "green";
+    });
+
+    boxes[i].addEventListener("pointermove", (e) =>
+      e.target.releasePointerCapture(e.pointerId)
+    );
+  }
+}
+
+//Check if the touch screen or not
+function isTouchScreendevice() {
+  return "ontouchstart" in window || navigator.maxTouchPoints;
+}
+
+if (isTouchScreendevice()) {
+  console.log("I am a touch screen device");
+} else {
+  console.log("Not touch");
 }
