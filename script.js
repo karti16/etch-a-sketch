@@ -54,6 +54,7 @@ function main() {
   touchPaint();
   erase();
   toggleGrid();
+  downloadImage();
 }
 
 //Update grid with the range slider
@@ -168,7 +169,7 @@ function erase() {
     paintColor = "#ffffff";
   });
 }
-
+//Toggle grid
 function toggleGrid() {
   let gridbtn = document.querySelector(".gridline");
 
@@ -192,4 +193,22 @@ function getCssVar(varName) {
 function setCssVar(varName, varValue) {
   r = document.querySelector(":root");
   r.style.setProperty(varName, varValue);
+}
+
+//Download image
+function downloadImage() {
+  document.getElementById("download").addEventListener("click", function () {
+    html2canvas(document.querySelector(".main-container")).then(function (
+      canvas
+    ) {
+      var anchorTag = document.createElement("a");
+      // usefull to preview image
+      // document.body.appendChild(anchorTag);
+      // document.getElementById("previewImg").appendChild(canvas);
+      anchorTag.download = "filename.jpg";
+      anchorTag.href = canvas.toDataURL();
+      anchorTag.target = "_blank";
+      anchorTag.click();
+    });
+  });
 }
