@@ -20,7 +20,7 @@ reset.addEventListener("pointerdown", resetGrid);
 
 let containerWidth = 500; //for calculating box width
 let gridCount = 20;
-
+let paintColor = "green";
 // Reset grid to default size
 function resetGrid() {
   gridCount = 20;
@@ -36,6 +36,7 @@ main();
 function main() {
   generateGrid(gridCount);
   setWidth();
+  color();
   cursorPaint();
   touchPain();
 }
@@ -69,11 +70,11 @@ function setWidth() {
 function cursorPaint() {
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("mousedown", function () {
-      boxes[i].style.backgroundColor = "green";
+      boxes[i].style.backgroundColor = paintColor;
     });
     boxes[i].addEventListener("mouseover", function () {
       if (mouseDown && mouseMove) {
-        boxes[i].style.backgroundColor = "green";
+        boxes[i].style.backgroundColor = paintColor;
       }
     });
   }
@@ -118,11 +119,11 @@ function random_rgba() {
 function touchPain() {
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("pointerdown", function (e) {
-      if (isTouchScreendevice()) boxes[i].style.backgroundColor = "green";
+      if (isTouchScreendevice()) boxes[i].style.backgroundColor = paintColor;
     });
 
     boxes[i].addEventListener("pointermove", function (e) {
-      if (isTouchScreendevice()) boxes[i].style.backgroundColor = "green";
+      if (isTouchScreendevice()) boxes[i].style.backgroundColor = paintColor;
     });
 
     boxes[i].addEventListener("pointermove", (e) =>
@@ -136,8 +137,9 @@ function isTouchScreendevice() {
   return "ontouchstart" in window || navigator.maxTouchPoints;
 }
 
-if (isTouchScreendevice()) {
-  console.log("I am a touch screen device");
-} else {
-  console.log("Not touch");
+function color() {
+  let colorPicker = document.querySelector("#colorPicker");
+  colorPicker.addEventListener("change", function () {
+    paintColor = colorPicker.value;
+  });
 }
