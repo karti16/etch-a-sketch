@@ -1,7 +1,13 @@
-window.onload = function () {
-  let gridbtn = document.querySelector(".gridline");
-  gridbtn.addEventListener("click", toggleGrid);
-};
+let gridbtn = document.querySelector(".gridline");
+gridbtn.addEventListener("click", toggleGrid);
+
+let erasebtn = document.querySelector(".eraser");
+erasebtn.addEventListener("click", erase);
+
+let paintbtn = document.querySelector(".paint");
+paintbtn.addEventListener("click", paint);
+
+window.onload = function () {};
 
 let mainContainer = document.querySelector(".main-container");
 let boxes = document.getElementsByClassName("box");
@@ -36,12 +42,15 @@ let containerWidth = 500;
 let gridCount = 20;
 
 //default grid color
-let paintColor = "rgb(0, 128, 0)";
+let currentPaintColor = "rgb(0, 128, 0)";
+let eraserColor = "#ffffff";
+let pickedColor = "rgb(0, 128, 0)";
+let defaultColor = "rgb(0, 128, 0)";
 
 // Reset grid to default size and color
 function resetGrid() {
   gridCount = 20;
-  paintColor = "rgb(0, 128, 0)";
+  currentPaintColor = "rgb(0, 128, 0)";
   document.getElementById("myRange").value = "20";
   sliderValue.innerHTML = "20 x 20";
   main();
@@ -57,8 +66,6 @@ function main() {
   color();
   cursorPaint();
   touchPaint();
-  erase();
-
   downloadImage();
 }
 
@@ -91,11 +98,11 @@ function setWidth() {
 function cursorPaint() {
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("mousedown", function () {
-      boxes[i].style.backgroundColor = paintColor;
+      boxes[i].style.backgroundColor = currentPaintColor;
     });
     boxes[i].addEventListener("mouseover", function () {
       if (mouseDown && mouseMove) {
-        boxes[i].style.backgroundColor = paintColor;
+        boxes[i].style.backgroundColor = currentPaintColor;
       }
     });
   }
@@ -141,11 +148,13 @@ function random_rgba() {
 function touchPaint() {
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("pointerdown", function (e) {
-      if (isTouchScreendevice()) boxes[i].style.backgroundColor = paintColor;
+      if (isTouchScreendevice())
+        boxes[i].style.backgroundColor = currentPaintColor;
     });
 
     boxes[i].addEventListener("pointermove", function (e) {
-      if (isTouchScreendevice()) boxes[i].style.backgroundColor = paintColor;
+      if (isTouchScreendevice())
+        boxes[i].style.backgroundColor = currentPaintColor;
     });
 
     boxes[i].addEventListener("pointermove", (e) =>
@@ -163,16 +172,22 @@ function isTouchScreendevice() {
 function color() {
   let colorPicker = document.querySelector("#colorPicker");
   colorPicker.addEventListener("change", function () {
-    paintColor = colorPicker.value;
+    pickedColor = colorPicker.value;
+    currentPaintColor = pickedColor;
   });
 }
 
 //Earsing paint
 function erase() {
-  let erasebtn = document.querySelector(".eraser");
-  erasebtn.addEventListener("click", function () {
-    paintColor = "#ffffff";
-  });
+  tempColor = currentPaintColor;
+  currentPaintColor = eraserColor;
+}
+
+// paint cont
+function paint() {
+  currentPaintColor = pickedColor;
+  cursorPaint();
+  touchPaint();
 }
 //Toggle grid
 function toggleGrid() {
