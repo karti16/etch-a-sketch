@@ -7,6 +7,9 @@ erasebtn.addEventListener("click", erase);
 let paintbtn = document.querySelector(".paint");
 paintbtn.addEventListener("click", paint);
 
+let oldColorbtn = document.querySelector(".oldcolor");
+oldColorbtn.addEventListener("click", chooseOldColor);
+
 window.onload = function () {};
 
 let mainContainer = document.querySelector(".main-container");
@@ -40,17 +43,33 @@ reset.addEventListener("pointerdown", resetGrid);
 let containerWidth = 500;
 //default grid size value
 let gridCount = 20;
+let oldColorFlag = true;
 
 //default grid color
-let currentPaintColor = "rgb(0, 128, 0)";
+let currentPaintColor = "rgb(46, 124, 212)";
 let eraserColor = "#ffffff";
 let pickedColor = "rgb(0, 128, 0)";
-let defaultColor = "rgb(0, 128, 0)";
+let defaultColor = "rgb(46, 124, 212)";
+
+window.oncontextmenu = (e) => {
+  e.preventDefault();
+};
+//Right click   Not using currently
+function righClick() {
+  mainContainer.addEventListener("mousedown", function (e) {
+    if (e.which == 3) {
+    }
+  });
+}
+
+// mainContainer.oncontextmenu = function () {
+//   alert("right click!");
+// };
 
 // Reset grid to default size and color
 function resetGrid() {
   gridCount = 20;
-  currentPaintColor = "rgb(0, 128, 0)";
+  currentPaintColor = defaultColor;
   document.getElementById("myRange").value = "20";
   sliderValue.innerHTML = "20 x 20";
   main();
@@ -67,6 +86,7 @@ function main() {
   cursorPaint();
   touchPaint();
   downloadImage();
+  righClick();
 }
 
 //Update grid with the range slider
@@ -97,10 +117,17 @@ function setWidth() {
 // Starts painting with mouse click and mouseclick and mouse move
 function cursorPaint() {
   for (let i = 0; i < boxes.length; i++) {
-    boxes[i].addEventListener("mousedown", function () {
-      boxes[i].style.backgroundColor = currentPaintColor;
+    boxes[i].addEventListener("mousedown", function (e) {
+      if (
+        mouseDown &&
+        e.which == 1 &&
+        isTouchScreendevice() == false &&
+        oldColorFlag
+      ) {
+        boxes[i].style.backgroundColor = currentPaintColor;
+      }
     });
-    boxes[i].addEventListener("mouseover", function () {
+    boxes[i].addEventListener("mouseover", function (e) {
       if (mouseDown && mouseMove) {
         boxes[i].style.backgroundColor = currentPaintColor;
       }
@@ -119,9 +146,13 @@ function clearPaint() {
 let mouseDown = false;
 let mouseMove = false;
 
-mainContainer.addEventListener("mousedown", () => (mouseDown = true));
+mainContainer.addEventListener("mousedown", function (e) {
+  if (e.which == 1) {
+    mouseDown = true;
+  }
+});
 mainContainer.addEventListener("mousemove", () => (mouseMove = true));
-mainContainer.addEventListener("mouseup", () => {
+document.addEventListener("mouseup", () => {
   mouseDown = false;
   mouseMove = false;
 });
@@ -148,18 +179,16 @@ function random_rgba() {
 function touchPaint() {
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("pointerdown", function (e) {
-      if (isTouchScreendevice())
+      if (isTouchScreendevice() && oldColorFlag)
         boxes[i].style.backgroundColor = currentPaintColor;
     });
 
     boxes[i].addEventListener("pointermove", function (e) {
-      if (isTouchScreendevice())
+      if (isTouchScreendevice()) {
         boxes[i].style.backgroundColor = currentPaintColor;
+        boxes[i].releasePointerCapture(e.pointerId);
+      }
     });
-
-    boxes[i].addEventListener("pointermove", (e) =>
-      e.target.releasePointerCapture(e.pointerId)
-    );
   }
 }
 
@@ -227,5 +256,19 @@ function downloadImage() {
       anchorTag.target = "_blank";
       anchorTag.click();
     });
+  });
+}
+
+function chooseOldColor(e) {
+  oldColorFlag = false;
+  document.body.style.cursor = "crosshair";
+  mainContainer.addEventListener("click", function (e) {
+    if (e.target.style.backgroundColor !== "") {
+      currentPaintColor = e.target.style.backgroundColor;
+      document.body.style.cursor = "default";
+      oldColorFlag = true;
+    }
+    document.body.style.cursor = "default";
+    oldColorFlag = true;
   });
 }

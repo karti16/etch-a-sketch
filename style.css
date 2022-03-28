@@ -136,15 +136,18 @@ table {
 /* * {
   touch-action: none;
 } */
-
+@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
 :root {
   --count: 15px;
   --width: 15px;
-  --borderColor: rgba(61, 61, 61, 0.5);
+  --borderColor: rgba(131, 131, 131, 0.5);
 }
 
 body {
   box-sizing: border-box;
+  text-align: center;
+  background-color: rgb(22, 22, 22);
+  font-family: "Inconsolata", monospace;
 }
 
 .main-container {
@@ -164,7 +167,7 @@ body {
   border-right: 1px solid;
   border-color: var(--borderColor);
 
-  position: absolute;
+  position: relative;
   top: 10%;
   bottom: 0;
   left: 0;
@@ -178,4 +181,55 @@ body {
   border-left: 1px solid;
   border-color: var(--borderColor);
   touch-action: none;
+  background-color: rgb(12, 12, 12);
+}
+button {
+  border-top: 1px solid rgb(46, 124, 212);
+  border-left: 1px solid rgb(46, 124, 212);
+  border-radius: 20px;
+  background-color: rgb(22, 22, 22);
+  color: rgba(46, 124, 212, 1);
+  padding: 7px 10px;
+  margin: 3px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-family: "Inconsolata", monospace;
+}
+.slidecontainer {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  width: 400px;
+  margin: auto;
+  align-items: center;
+  margin-bottom: 10px;
+  color: white;
+  padding: 7px 10px;
+  border-top: 1px solid rgb(46, 124, 212);
+  border-left: 1px solid rgb(46, 124, 212);
+  border-radius: 20px;
+}
+h2 {
+  font-family: "Black Ops One", cursive;
+  text-transform: uppercase;
+  font-size: 50px;
+  background-color: rgb(39, 39, 39);
+  color: rgb(46, 124, 212);
+  padding: 10px 0px;
+  margin-bottom: 20px;
+}
+#colorPicker {
+  background: none;
+  border: 0px;
+  padding: 0;
+  margin: 0;
+}
+.btn {
+  width: 400px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: -10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }

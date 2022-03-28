@@ -6,12 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Etch-a-Sketch</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Inconsolata&display=swap"
+      rel="stylesheet"
+    />
     <script src="script.js" defer></script>
     <script src="html2canvas.js" type="text/javascript" defer></script>
   </head>
   <body>
-    <button class="clear">Clear Paint</button>
-    <button class="reset">Reset</button>
+    <h2>retro-sketch</h2>
+    <div class="btn">
+      <button class="clear">Clear Paint</button>
+      <button class="reset">Reset</button>
+      <button class="eraser">Erase</button>
+      <button class="paint">Paint</button>
+      <button class="gridline">Toggle Grid lines</button>
+      <button id="download">Download</button>
+      <button class="oldcolor">Color from grid</button>
+    </div>
+
     <div class="slidecontainer">
       <input
         type="range"
@@ -21,19 +39,12 @@
         step="5"
         class="slider"
         id="myRange"
-      /><span id="gridvalue"></span>
-    </div>
-    <div class="color">
+      />
+      <span id="gridvalue"></span>
       <div>
-        <input type="color" id="colorPicker" name="head" value="#e66465" />
-        <label for="head">Pick color</label>
+        <input type="color" id="colorPicker" name="head" value="#2e7cd4" />
       </div>
-      <button class="eraser">Erase</button>
-      <button class="paint">Paint</button>
-      <button class="gridline">Toggle Grid lines</button>
-      <button id="download">Download</button>
     </div>
-
     <div class="main-container"></div>
   </body>
 </html>
